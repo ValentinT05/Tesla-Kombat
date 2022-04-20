@@ -107,13 +107,13 @@ class Fighter extends Sprite {
     this.attackBox.position.x = this.position.x + this.attackBox.offset.x
     this.attackBox.position.y = this.position.y + this.attackBox.offset.y
 
-    // draw the attack box
-    // c.fillRect(
-    //   this.attackBox.position.x,
-    //   this.attackBox.position.y,
-    //   this.attackBox.width,
-    //   this.attackBox.height
-    // )
+     //draw the attack box
+     //c.fillRect(
+     // this.attackBox.position.x,
+     //  this.attackBox.position.y,
+     //  this.attackBox.width,
+    //this.attackBox.height
+   //   )
 
     this.position.x += this.velocity.x
     this.position.y += this.velocity.y
@@ -174,6 +174,13 @@ class Fighter extends Sprite {
           this.framesCurrent = 0
         }
         break
+        case'run2':
+        if (this.image !== this.sprites.run2.image) {
+        this.image = this.sprites.run2.image
+        this.framesMax = this.sprites.run2.framesMax
+        this.frameCurrent = 0
+      }
+        break
       case 'jump':
         if (this.image !== this.sprites.jump.image) {
           this.image = this.sprites.jump.image
@@ -181,13 +188,26 @@ class Fighter extends Sprite {
           this.framesCurrent = 0
         }
         break
-
+      case'jump2':
+        if (this.image !== this.sprites.jump2.image) {
+        this.image = this.sprites.jump2.image
+        this.framesMax = this.sprites.jump2.framesMax
+        this.frameCurrent = 0
+      }
+        break
       case 'fall':
         if (this.image !== this.sprites.fall.image) {
           this.image = this.sprites.fall.image
           this.framesMax = this.sprites.fall.framesMax
           this.framesCurrent = 0
         }
+        break
+        case'fall2':
+        if (this.image !== this.sprites.fall2.image) {
+        this.image = this.sprites.fall2.image
+        this.framesMax = this.sprites.fall2.framesMax
+        this.frameCurrent = 0
+      }
         break
 
       case 'attack1':

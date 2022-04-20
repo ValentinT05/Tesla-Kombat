@@ -28,7 +28,7 @@ const shop = new Sprite({
 
 const player = new Fighter({
   position: {
-    x: 0,
+    x: 100,
     y: 0
   },
   velocity: {
@@ -39,7 +39,7 @@ const player = new Fighter({
     x: 0,
     y: 0
   },
-  imageSrc: './img/player1/idle.png',
+  imageSrc: './img/player1/idle2.png',
   framesMax: 8,
   scale: 2.5,
   offset: {
@@ -48,20 +48,32 @@ const player = new Fighter({
   },
   sprites: {
     idle: {
-      imageSrc: './img/player1/idle.png',
+      imageSrc: './img/player1/idle2.png',
       framesMax: 8
     },
     run: {
       imageSrc: './img/player1/run.png',
       framesMax: 8
     },
+    run2:{
+      imageSrc:'./img/player1/run2.png',
+      framesMax:8,
+    },
     jump: {
       imageSrc: './img/player1/jump.png',
       framesMax: 2
     },
+    jump2:{
+      imageSrc:'./img/player1/jump2.png',
+      framesMax:2,
+    },
     fall: {
       imageSrc: './img/player1/fall.png',
       framesMax: 2
+    },
+    fall2:{
+      imageSrc:'./img/player1/fall2.png',
+      framesMax:2,
     },
     attack1: {
       imageSrc: './img/player1/attack2.png',
@@ -78,18 +90,18 @@ const player = new Fighter({
   },
   attackBox: {
     offset: {
-      x: 100,
-      y: 200
+      x: 0,
+      y: 0
     },
-    width: 160,
+    width: 130,
     height: 50
   }
 })
 
 const enemy = new Fighter({
   position: {
-    x: 400,
-    y: 100
+    x: 600,
+    y: 0
   },
   velocity: {
     x: 0,
@@ -97,10 +109,10 @@ const enemy = new Fighter({
   },
   color: 'blue',
   offset: {
-    x: -50,
+    x: 0,
     y: 0
   },
-  imageSrc: './img/player2/enemyIdle.png',
+  imageSrc: './img/player2/Sprites/enemyIdle.png',
   framesMax: 4,
   scale: 2.5,
   offset: {
@@ -109,40 +121,40 @@ const enemy = new Fighter({
   },
   sprites: {
     idle: {
-      imageSrc: './img/player2/enemyIdle.png',
+      imageSrc: './img/player2/Sprites/enemyIdle.png',
       framesMax: 4
     },
     run: {
-      imageSrc: './img/player2/enemyRun.png',
+      imageSrc: './img/player2/Sprites/enemyRun.png',
       framesMax: 8
     },
     jump: {
-      imageSrc: './img/player2/enemyJump.png',
+      imageSrc: './img/player2/Sprites/enemyJump.png',
       framesMax: 2
     },
     fall: {
-      imageSrc: './img/player2/enemyFall.png',
+      imageSrc: './img/player2/Sprites/enemyFall.png',
       framesMax: 2
     },
     attack1: {
-      imageSrc: './img/player2/enemyAttack.png',
+      imageSrc: './img/player2/Sprites/enemyAttack2.png',
       framesMax: 4
     },
     takeHit: {
-      imageSrc: './img/player2/Take hit.png',
+      imageSrc: './img/player2/Sprites/Take hit.png',
       framesMax: 3
     },
     death: {
-      imageSrc: './img/player2/Death.png',
+      imageSrc: './img/player2/Sprites/Death.png',
       framesMax: 7
     }
   },
   attackBox: {
     offset: {
-      x: 80,
-      y: 200
+      x: -110,
+      y: 0
     },
-    width: 170,
+    width: 150,
     height: 50
   }
 })
@@ -172,7 +184,7 @@ function animate() {
   c.fillRect(0, 0, canvas.width, canvas.height)
   background.update()
   shop.update()
-  c.fillStyle = 'rgba(255, 255, 255, 0.15)'
+  c.fillStyle = 'rgba(255, 255, 255, 0.1)'
   c.fillRect(0, 0, canvas.width, canvas.height)
   player.update()
   enemy.update()
@@ -184,7 +196,7 @@ function animate() {
 
   if (keys.a.pressed && player.lastKey === 'a') {
     player.velocity.x = -5
-    player.switchSprite('run')
+    player.switchSprite('run2')
   } else if (keys.d.pressed && player.lastKey === 'd') {
     player.velocity.x = 5
     player.switchSprite('run')
@@ -197,6 +209,11 @@ function animate() {
     player.switchSprite('jump')
   } else if (player.velocity.y > 0) {
     player.switchSprite('fall')
+  }
+  if(player.velocity.y < 0 && player.velocity.x -5 ) {
+  player.switchSprite('jump2')
+  }else if(player.velocity.y > 0 && player.velocity.x - 5 ) {
+    player.switchSprite('fall2')
   }
 
   // Enemy movement
@@ -224,7 +241,7 @@ function animate() {
       rectangle2: enemy
     }) &&
     player.isAttacking &&
-    player.framesCurrent === 4
+    player.framesCurrent === 3
   ) {
     enemy.takeHit()
     player.isAttacking = false
@@ -235,7 +252,7 @@ function animate() {
   }
 
   // if player misses
-  if (player.isAttacking && player.framesCurrent === 4) {
+  if (player.isAttacking && player.framesCurrent === 3) {
     player.isAttacking = false
   }
 
@@ -246,7 +263,7 @@ function animate() {
       rectangle2: player
     }) &&
     enemy.isAttacking &&
-    enemy.framesCurrent === 2
+    enemy.framesCurrent === 1
   ) {
     player.takeHit()
     enemy.isAttacking = false
@@ -257,7 +274,7 @@ function animate() {
   }
 
   // if player misses
-  if (enemy.isAttacking && enemy.framesCurrent === 2) {
+  if (enemy.isAttacking && enemy.framesCurrent === 1) {
     enemy.isAttacking = false
   }
 
